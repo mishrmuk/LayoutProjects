@@ -1,0 +1,24 @@
+** Generated for: hspiceD
+** Generated on: Nov  5 19:30:31 2025
+** Design library name: cad3
+** Design cell name: NAND2_balanced
+** Design view name: schematic
+.GLOBAL vss! vdd!
+
+
+.TEMP 25
+.OPTION
++    ARTIST=2
++    INGOLD=2
++    PARHIER=LOCAL
++    PSF=2
++    HIER_DELIM=0
+
+** Library name: cad3
+** Cell name: NAND2_balanced
+** View name: schematic
+mpmos1 out b vdd! vdd! PMOS_VTL L=50e-9 W=410e-9 AD=43.05e-15 AS=43.05e-15 PD=620e-9 PS=620e-9 M=1
+mpmos0 out a vdd! vdd! PMOS_VTL L=50e-9 W=410e-9 AD=43.05e-15 AS=43.05e-15 PD=620e-9 PS=620e-9 M=1
+mnmos1 net1 b vss! vss! NMOS_VTL L=50e-9 W=300e-9 AD=31.5e-15 AS=31.5e-15 PD=510e-9 PS=510e-9 M=1
+mnmos0 out a net1 vss! NMOS_VTL L=50e-9 W=300e-9 AD=31.5e-15 AS=31.5e-15 PD=510e-9 PS=510e-9 M=1
+.END

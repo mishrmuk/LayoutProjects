@@ -1,0 +1,85 @@
+** Generated for: hspiceD
+** Generated on: Nov 17 15:41:45 2025
+** Design library name: cad4
+** Design cell name: loaded_flip_flop
+** Design view name: schematic
+.GLOBAL vdd! vss!
+
+
+.TEMP 25
+.OPTION
++    ARTIST=2
++    INGOLD=2
++    PARHIER=LOCAL
++    PSF=2
++    HIER_DELIM=0
+
+** Library name: cad4
+** Cell name: INVD1
+** View name: schematic
+.subckt INVD1 vi vo
+m0 vo vi vdd! vdd! PMOS_VTL L=50e-9 W=400e-9 AD=42e-15 AS=42e-15 PD=610e-9 PS=610e-9 M=1
+m1 vo vi vss! vss! NMOS_VTL L=50e-9 W=300e-9 AD=31.5e-15 AS=31.5e-15 PD=510e-9 PS=510e-9 M=1
+.ends INVD1
+** End of subcircuit definition.
+
+** Library name: cad4
+** Cell name: NAND2
+** View name: schematic
+*.subckt NAND2 a b out
+*mpmos1 out b vdd! vdd! PMOS_VTL L=50e-9 W=400e-9 AD=42e-15 AS=42e-15 PD=610e-9 PS=610e-9 M=1
+*mpmos0 out a vdd! vdd! PMOS_VTL L=50e-9 W=400e-9 AD=42e-15 AS=42e-15 PD=610e-9 PS=610e-9 M=1
+*mnmos1 net1 b vss! vss! NMOS_VTL L=50e-9 W=300e-9 AD=31.5e-15 AS=31.5e-15 PD=510e-9 PS=510e-9 M=1
+*mnmos0 out a net1 vss! NMOS_VTL L=50e-9 W=300e-9 AD=31.5e-15 AS=31.5e-15 PD=510e-9 PS=510e-9 M=1
+*.ends NAND2
+** End of subcircuit definition.
+
+** Library name: cad4
+** Cell name: NOR2
+** View name: schematic
+*.subckt NOR2 a b out
+*mnmos1 out b vss! vss! NMOS_VTL L=50e-9 W=300e-9 AD=31.5e-15 AS=31.5e-15 PD=510e-9 PS=510e-9 M=1
+*mnmos0 out a vss! vss! NMOS_VTL L=50e-9 W=300e-9 AD=31.5e-15 AS=31.5e-15 PD=510e-9 PS=510e-9 M=1
+*mpmos0 net9 a vdd! vdd! PMOS_VTL L=50e-9 W=400e-9 AD=42e-15 AS=42e-15 PD=610e-9 PS=610e-9 M=1
+*mpmos1 out b net9 vdd! PMOS_VTL L=50e-9 W=400e-9 AD=42e-15 AS=42e-15 PD=610e-9 PS=610e-9 M=1
+*.ends NOR2
+** End of subcircuit definition.
+
+** Library name: cad4
+** Cell name: GATE
+** View name: schematic
+*.subckt GATE a a_bar in out
+*m0 out a_bar in vdd! PMOS_VTL L=50e-9 W=400e-9 AD=42e-15 AS=42e-15 PD=610e-9 PS=610e-9 M=1
+*m1 in a out vss! NMOS_VTL L=50e-9 W=300e-9 AD=31.5e-15 AS=31.5e-15 PD=510e-9 PS=510e-9 M=1
+*.ends GATE
+** End of subcircuit definition.
+
+** Library name: cad4
+** Cell name: DFAR
+** View name: schematic
+*.subckt DFAR clk d q rst
+*xi6 net12 q INVD1
+*xi5 net11 net12 INVD1
+*xi4 net9 net10 INVD1
+*xi3 d net8 INVD1
+*xi2 rst net6 INVD1
+*xi1 net2 net1 INVD1
+*xi0 clk net2 INVD1
+*xi7 net10 net6 net3 NAND2
+*xi11 net12 rst net24 NOR2
+*xi23 net1 net2 net10 net11 GATE
+*xi22 net2 net1 net8 net9 GATE
+*xi21 net1 net2 net9 net3 GATE
+*xi20 net2 net1 net11 net24 GATE
+*.ends DFAR
+** End of subcircuit definition.
+
+
+.include DFAR.pex.netlist
+
+** Library name: cad4
+** Cell name: loaded_flip_flop
+** View name: schematic
+xi0 clk d q rst DFAR
+c0 q vss! 6e-15
+.END

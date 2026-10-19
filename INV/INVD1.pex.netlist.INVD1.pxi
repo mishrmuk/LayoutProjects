@@ -1,0 +1,9 @@
+* File: INVD1.pex.netlist.INVD1.pxi
+* Created: Sat Oct 18 23:54:13 2025
+* 
+cc_1 VI VO 0.0820403f
+cc_2 VI VSS! 0.0142739f
+cc_3 VI VDD! 0.0108617f
+cc_4 VO VSS! 0.00265573f
+cc_5 VO VDD! 0.00168992f
+cc_6 VSS! VDD! 0.00274982f

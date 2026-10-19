@@ -1,0 +1,127 @@
+** Generated for: hspiceD
+** Generated on: Nov 19 14:42:58 2025
+** Design library name: cad4
+** Design cell name: lfsr
+** Design view name: schematic
+.GLOBAL vdd! vss!
+
+
+.TEMP 25
+.OPTION
++    ARTIST=2
++    INGOLD=2
++    PARHIER=LOCAL
++    PSF=2
++    HIER_DELIM=0
+
+** Library name: cad4
+** Cell name: NOR2
+** View name: schematic
+*.subckt NOR2 a b out
+*mnmos1 out b vss! vss! NMOS_VTL L=50e-9 W=300e-9 AD=31.5e-15 AS=31.5e-15 PD=510e-9 PS=510e-9 M=1
+*mnmos0 out a vss! vss! NMOS_VTL L=50e-9 W=300e-9 AD=31.5e-15 AS=31.5e-15 PD=510e-9 PS=510e-9 M=1
+*mpmos0 net9 a vdd! vdd! PMOS_VTL L=50e-9 W=400e-9 AD=42e-15 AS=42e-15 PD=610e-9 PS=610e-9 M=1
+*mpmos1 out b net9 vdd! PMOS_VTL L=50e-9 W=400e-9 AD=42e-15 AS=42e-15 PD=610e-9 PS=610e-9 M=1
+*.ends NOR2
+** End of subcircuit definition.
+
+** Library name: cad4
+** Cell name: INVD1
+** View name: schematic
+*.subckt INVD1 vi vo
+*m0 vo vi vdd! vdd! PMOS_VTL L=50e-9 W=400e-9 AD=42e-15 AS=42e-15 PD=610e-9 PS=610e-9 M=1
+*m1 vo vi vss! vss! NMOS_VTL L=50e-9 W=300e-9 AD=31.5e-15 AS=31.5e-15 PD=510e-9 PS=510e-9 M=1
+*.ends INVD1
+** End of subcircuit definition.
+
+** Library name: cad4
+** Cell name: NAND2
+** View name: schematic
+*.subckt NAND2 a b out
+*mpmos1 out b vdd! vdd! PMOS_VTL L=50e-9 W=400e-9 AD=42e-15 AS=42e-15 PD=610e-9 PS=610e-9 M=1
+*mpmos0 out a vdd! vdd! PMOS_VTL L=50e-9 W=400e-9 AD=42e-15 AS=42e-15 PD=610e-9 PS=610e-9 M=1
+*mnmos1 net1 b vss! vss! NMOS_VTL L=50e-9 W=300e-9 AD=31.5e-15 AS=31.5e-15 PD=510e-9 PS=510e-9 M=1
+*mnmos0 out a net1 vss! NMOS_VTL L=50e-9 W=300e-9 AD=31.5e-15 AS=31.5e-15 PD=510e-9 PS=510e-9 M=1
+*.ends NAND2
+** End of subcircuit definition.
+
+** Library name: cad4
+** Cell name: GATE
+** View name: schematic
+*.subckt GATE a a_bar in out
+*m0 out a_bar in vdd! PMOS_VTL L=50e-9 W=400e-9 AD=42e-15 AS=42e-15 PD=610e-9 PS=610e-9 M=1
+*m1 in a out vss! NMOS_VTL L=50e-9 W=300e-9 AD=31.5e-15 AS=31.5e-15 PD=510e-9 PS=510e-9 M=1
+*.ends GATE
+** End of subcircuit definition.
+
+** Library name: cad4
+** Cell name: DFAR
+** View name: schematic
+*.subckt DFAR clk d q rst
+*xi6 net12 q INVD1
+*xi5 net11 net12 INVD1
+*xi4 net9 net10 INVD1
+*xi3 d net8 INVD1
+*xi2 rst net6 INVD1
+*xi1 net2 net1 INVD1
+*xi0 clk net2 INVD1
+*xi7 net10 net6 net3 NAND2
+*xi11 net12 rst net24 NOR2
+*xi21 net1 net2 net9 net3 GATE
+*xi23 net1 net2 net10 net11 GATE
+*xi22 net2 net1 net8 net9 GATE
+*xi20 net2 net1 net11 net24 GATE
+*.ends DFAR
+** End of subcircuit definition.
+
+** Library name: cad4
+** Cell name: XOR2
+** View name: schematic
+*.subckt XOR2 a b out
+*xi3 net6 net9 out NAND2
+*xi2 net3 b net9 NAND2
+*xi1 a net3 net6 NAND2
+*xi0 a b net3 NAND2
+*.ends XOR2
+** End of subcircuit definition.
+
+** Library name: cad4
+** Cell name: XOR4
+** View name: schematic
+*.subckt XOR4 a b c d out
+*xi2 net3 net6 out XOR2
+*xi1 c d net6 XOR2
+*xi0 a b net3 XOR2
+*.ends XOR4
+** End of subcircuit definition.
+
+** Library name: cad4
+** Cell name: LFSR
+** View name: schematic
+*xi0 rst net1 net74 NOR2
+*xi1 net74 net4 INVD1
+*xi17 clk state<1> state<0> rst DFAR
+*xi16 clk state<2> state<1> rst DFAR
+*xi15 clk state<3> state<2> rst DFAR
+*xi14 clk state<4> state<3> rst DFAR
+*xi13 clk state<5> state<4> rst DFAR
+*xi12 clk state<6> state<5> rst DFAR
+*xi11 clk state<7> state<6> rst DFAR
+*xi10 clk state<8> state<7> rst DFAR
+*xi9 clk state<9> state<8> rst DFAR
+*xi8 clk state<10> state<9> rst DFAR
+*xi7 clk state<11> state<10> rst DFAR
+*xi6 clk state<12> state<11> rst DFAR
+*xi5 clk state<13> state<12> rst DFAR
+*xi4 clk state<14> state<13> rst DFAR
+*xi3 clk state<15> state<14> rst DFAR
+*xi2 clk net4 state<15> vss! DFAR
+*xi18 state<5> state<3> state<2> state<0> net1 XOR4
+
+.include LFSR.pex.netlist
+xi0  RST CLK STATE<15> STATE<14> STATE<13> STATE<12> STATE<11>
++ STATE<10> STATE<9> STATE<8> STATE<7> STATE<6> STATE<5> STATE<4> STATE<3>
++ STATE<2> STATE<1> STATE<0> lfsr
+
+
+.END
